@@ -1,0 +1,29 @@
+.vscode/
+.nuxt/
+BrowserMetrics/
+CertificateRevocation/
+Crashpad/
+Default/
+InterventionPolicyDatabase/
+FileTypePolicies/
+MEIPreload/
+middleware/
+node_modules/
+OriginTrials/
+PepperFlash/
+pnacl/
+RecoveryImproved/
+Safe Browsing/
+ShaderCache/
+SSLErrorAssistant/
+Subresource Filter/
+SwReporter/
+ThirdPartyModuleList64/
+WidevineCdm/
+CrashpadMetrics-active.pma
+en-US-8-0.bdic
+First Run
+Last Version
+Local State
+Safe Browsing Cookies
+Safe Browsing Cookies-journal

@@ -28,18 +28,31 @@
       </div>
       <div class="column" />
     </div>
+    <div class="columns">
+      <div class="column" />
+      <div class="column is-four-fifths">
+        <p class="has-text-weight-semibold is-size-4 has-text-centerd">
+          {{ classResult }}
+        </p>
+      </div>
+      <div class="column" />
+    </div>
     <div v-if="files != null">
       <div v-for="(file, index) in files" :key="index">
         <div class="columns">
           <div class="column">
-            <figure class="image is-square">
+            <figure class="image is-128x128">
               <img :src="images[index]">
             </figure>
           </div>
-          <div class="column">
-            <p class="has-text-weight-semibold is-size-4 has-text-centerd">
-              {{ file.name }} {{ test }}
-            </p>
+          <div class="column is-one-third">
+            <div v-if="isExistData === true">
+              <b-button @click="clickTest(index)">
+                <p class="has-text-weight-semibold is-size-4 has-text-centerd">
+                  {{ file.name }}は何の画像か分類する
+                </p>
+              </b-button>
+            </div>
           </div>
           <div class="column">
             <p class="has-text-weight-semibold is-size-4 has-text-centerd">
@@ -65,7 +78,10 @@ export default {
       msg2: 'ここをクリックして選択',
       files: [],
       images: [],
-      test: null
+      images_decodable: [],
+      isExistData: false,
+      classResult: '',
+      test: ''
     }
   },
   methods: {
@@ -86,9 +102,17 @@ export default {
         : event.dataTransfer.files
       for (let i = 0; i < fileList.length; i++) {
         if (fileList[i].type === 'image/jpeg' || fileList[i].type === 'image/png') {
+          this.isExistData = true
           const reader = new FileReader()
           reader.onload = () => {
-            this.images.push(reader.result)
+            const res = reader.result
+            this.images.push(res)
+            if (fileList[i].type === 'image/jpeg') {
+              this.images_decodable.push(String(res).replace('data:image/jpeg;base64,', ''))
+            } else {
+              this.images_decodable.push(String(res).replace('data:image/png;base64,', ''))
+            }
+            this.classResult.push('')
           }
           reader.readAsDataURL(fileList[i])
         } else {
@@ -98,6 +122,11 @@ export default {
       }
       this.msg1 = 'ドロップされました'
       this.msg2 = 'ファイル数は' + fileList.length + 'です。'
+    },
+    async clickTest (index) {
+      const translated = this.images_decodable[index].replace(/\//g, '!').replace(/\+/g, '-')
+      const res = await this.$predictImageResult(translated)
+      this.classResult = this.files[index].name + '/' + res
     }
   }
 }

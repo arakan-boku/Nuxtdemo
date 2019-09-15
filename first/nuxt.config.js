@@ -12,7 +12,8 @@ export default {
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'stylesheet', href: 'https://use.fontawesome.com/releases/v5.2.0/css/all.css' }
     ]
   },
   /*
@@ -26,8 +27,13 @@ export default {
   ],
   /*
   ** Plugins to load before mounting the App
+ 
   */
   plugins: [
+    { src: '~/plugins/getPrefecturesJson.js' },
+    { src: '~/plugins/getMunicipalitiesJson.js' },
+    { src: '~/plugins/getAddressFromZipJson.js' },
+    { src: '~/plugins/predicImageResult.js' },
   ],
   /*
   ** Nuxt.js dev-modules

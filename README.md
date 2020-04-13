@@ -1,3 +1,3 @@
 # Nuxtdemo
 
-NUXTを使ったデモ（練習用）
+NUXTの練習用
